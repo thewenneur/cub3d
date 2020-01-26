@@ -1,3 +1,5 @@
 /cmake-build-debug/
 /CMakeLists.txt
 */*.o
+/minilibx_opengl_20191021/libmlx.a
+/a.out
