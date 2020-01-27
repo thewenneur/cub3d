@@ -6,7 +6,7 @@
 /*   By: tbrouill <tbrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 00:36:24 by tbrouill          #+#    #+#             */
-/*   Updated: 2020/01/27 00:54:14 by tbrouill         ###   ########.fr       */
+/*   Updated: 2020/01/27 00:56:59 by tbrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 int	ft_frame(t_mlx *mlx)
 {
-	static int frame = 0;
+	static int frame;
 
-	(void)mlx;
 	ft_putstr_fd("Frame nbr\t", 1);
 	ft_putnbr_fd(frame, 1);
 	ft_putchar_fd('\n', 1);

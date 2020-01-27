@@ -6,7 +6,7 @@
 /*   By: tbrouill <tbrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 08:06:48 by tbrouill          #+#    #+#             */
-/*   Updated: 2020/01/26 23:43:53 by tbrouill         ###   ########.fr       */
+/*   Updated: 2020/01/27 01:37:36 by tbrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,21 @@ typedef struct	s_mlx{
 	int		win_width;
 	t_img	img;
 	t_map	map;
+	char	*error;
 }				t_mlx;
 
 int		ft_quit(t_mlx *mlx);
 int		ft_frame(t_mlx *mlx);
 int		ft_keystroke(int keycode, t_mlx *mlx);
 int		ft_parser(char *filepath, t_mlx *mlx);
+void	ft_parse_from_file(t_mlx *mlx, int map_fd);
+void 	get_texture_n(t_mlx *mlx, char *str);
+void 	get_texture_s(t_mlx *mlx, char *str);
+void 	get_texture_w(t_mlx *mlx, char *str);
+void 	get_texture_e(t_mlx *mlx, char *str);
+void 	get_texture_sprite(t_mlx *mlx, char *str);
+void 	ft_get_win_size(t_mlx *mlx, const char *str);
+void	ft_get_floor_color(t_mlx *mlx, const char *str);
+void	ft_get_roof_color(t_mlx *mlx, const char *str);
 
 #endif
