@@ -6,7 +6,7 @@
 /*   By: tbrouill <tbrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 08:06:48 by tbrouill          #+#    #+#             */
-/*   Updated: 2020/01/27 01:37:36 by tbrouill         ###   ########.fr       */
+/*   Updated: 2020/01/27 02:11:52 by tbrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 # include "get_next_line/get_next_line.h"
 
 typedef struct	s_img {
-	void	*data;
 	int		width;
 	int		height;
+	void	*data;
 }				t_img;
 
 typedef struct	s_map {
@@ -42,19 +42,22 @@ typedef struct	s_map {
 }				t_map;
 
 typedef struct	s_mlx{
-	void	*mlx;
-	void	*win;
+	char	*error;
+	char	*save_path;
 	int		win_height;
 	int		win_width;
 	t_img	img;
 	t_map	map;
-	char	*error;
+	void	*mlx;
+	void	*win;
 }				t_mlx;
 
+char	*ft_get_save_path(int argc, char **argv);
 int		ft_quit(t_mlx *mlx);
 int		ft_frame(t_mlx *mlx);
 int		ft_keystroke(int keycode, t_mlx *mlx);
 int		ft_parser(char *filepath, t_mlx *mlx);
+t_mlx	ft_mlx_init(int argc, char **argv);
 void	ft_parse_from_file(t_mlx *mlx, int map_fd);
 void 	get_texture_n(t_mlx *mlx, char *str);
 void 	get_texture_s(t_mlx *mlx, char *str);

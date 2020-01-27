@@ -6,7 +6,7 @@
 /*   By: tbrouill <tbrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 01:13:04 by tbrouill          #+#    #+#             */
-/*   Updated: 2020/01/27 01:42:29 by tbrouill         ###   ########.fr       */
+/*   Updated: 2020/01/27 02:31:24 by tbrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void get_texture_n(t_mlx *mlx, char *str)
 	if (!mlx->map.n_texture.data)
 	{
 		mlx->map.init = 0;
-		mlx->error = ft_strdup("Couldn't open the North Wall Texture.");
+		mlx->error = ft_strdup("Couldn't open the North Wall (NO) Texture.");
 	}
 }
 
@@ -42,7 +42,7 @@ void get_texture_s(t_mlx *mlx, char *str)
 	if (!mlx->map.s_texture.data)
 	{
 		mlx->map.init = 0;
-		mlx->error = ft_strdup("Couldn't open the South Wall Texture.");
+		mlx->error = ft_strdup("Couldn't open the South Wall (SO) Texture.");
 	}
 }
 
@@ -59,7 +59,7 @@ void get_texture_w(t_mlx *mlx, char *str)
 	if (!mlx->map.w_texture.data)
 	{
 		mlx->map.init = 0;
-		mlx->error = ft_strdup("Couldn't open the West Wall Texture.");
+		mlx->error = ft_strdup("Couldn't open the West Wall (WE) Texture.");
 	}
 }
 
@@ -76,7 +76,7 @@ void get_texture_e(t_mlx *mlx, char *str)
 	if (!mlx->map.e_texture.data)
 	{
 		mlx->map.init = 0;
-		mlx->error = ft_strdup("Couldn't open the East Wall Texture.");
+		mlx->error = ft_strdup("Couldn't open the East Wall (EA) Texture.");
 	}
 }
 
@@ -93,6 +93,6 @@ void get_texture_sprite(t_mlx *mlx, char *str)
 	if (!mlx->map.sprite_texture.data)
 	{
 		mlx->map.init = 0;
-		mlx->error = ft_strdup("Couldn't open the sprite Texture.");
+		mlx->error = ft_strdup("Couldn't open the sprite (S) Texture.");
 	}
 }
