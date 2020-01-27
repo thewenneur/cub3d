@@ -6,7 +6,7 @@
 /*   By: tbrouill <tbrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 08:06:48 by tbrouill          #+#    #+#             */
-/*   Updated: 2020/01/27 02:11:52 by tbrouill         ###   ########.fr       */
+/*   Updated: 2020/01/27 05:04:13 by tbrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,35 @@ typedef struct	s_img {
 	void	*data;
 }				t_img;
 
+typedef struct	s_player {
+	unsigned int	x;
+	unsigned int	y;
+	double			dir;
+}				t_player;
+
 typedef struct	s_map {
-	int		init;
-	int		f_color[3];
-	int		c_color[3];
-	t_img	n_texture;
-	t_img	s_texture;
-	t_img	w_texture;
-	t_img	e_texture;
-	t_img	sprite_texture;
+	int			init;
+	int			f_color[3];
+	int			c_color[3];
+	char		**map_grid;
+	t_img		n_texture;
+	t_img		s_texture;
+	t_img		w_texture;
+	t_img		e_texture;
+	t_img		sprite_texture;
+	t_player	player_start;
 }				t_map;
 
 typedef struct	s_mlx{
-	char	*error;
-	char	*save_path;
-	int		win_height;
-	int		win_width;
-	t_img	img;
-	t_map	map;
-	void	*mlx;
-	void	*win;
+	char		*error;
+	char		*save_path;
+	int			win_height;
+	int			win_width;
+	t_img		img;
+	t_map		map;
+	t_player	player;
+	void		*mlx;
+	void		*win;
 }				t_mlx;
 
 char	*ft_get_save_path(int argc, char **argv);
@@ -67,5 +76,5 @@ void 	get_texture_sprite(t_mlx *mlx, char *str);
 void 	ft_get_win_size(t_mlx *mlx, const char *str);
 void	ft_get_floor_color(t_mlx *mlx, const char *str);
 void	ft_get_roof_color(t_mlx *mlx, const char *str);
-
+void	ft_get_map_grid(t_mlx *mlx, char **str, int map_fd);
 #endif

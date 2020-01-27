@@ -6,7 +6,7 @@
 /*   By: tbrouill <tbrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 02:54:05 by tbrouill          #+#    #+#             */
-/*   Updated: 2020/01/27 02:57:09 by tbrouill         ###   ########.fr       */
+/*   Updated: 2020/01/27 06:00:28 by tbrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,25 +72,28 @@ void		ft_get_roof_color(t_mlx *mlx, const char *str)
 	free(tmp);
 }
 
-static void	ft_parse_line_from_file(t_mlx *mlx, char *str)
+static void	ft_parse_line_from_file(t_mlx *mlx, char **str, int map_fd)
 {
-	if (*str == 'R' && *(str + 1) == ' ')
-		ft_get_win_size(mlx, str);
-	else if (*str == 'N' && *(str + 1) == 'O' && *(str + 2) == ' ')
-		get_texture_n(mlx, str);
-	else if (*str == 'S' && *(str + 1) == 'O' && *(str + 2) == ' ')
-		get_texture_s(mlx, str);
-	else if (*str == 'W' && *(str + 1) == 'E' && *(str + 2) == ' ')
-		get_texture_w(mlx, str);
-	else if (*str == 'E' && *(str + 1) == 'A' && *(str + 2) == ' ')
-		get_texture_e(mlx, str);
-	else if (*str == 'S' && *(str + 1) == ' ')
-		get_texture_sprite(mlx, str);
-	else if (*str == 'F' && *(str + 1) == ' ')
-		ft_get_floor_color(mlx, str);
-	else if (*str == 'C' && *(str + 1) == ' ')
-		ft_get_roof_color(mlx, str);
-	free(str);
+	if (**str == 'R' && *((*str) + 1) == ' ')
+		ft_get_win_size(mlx, *str);
+	else if (**str == 'N' && *((*str) + 1) == 'O' && *((*str) + 2) == ' ')
+		get_texture_n(mlx, *str);
+	else if (**str == 'S' && *((*str) + 1) == 'O' && *((*str) + 2) == ' ')
+		get_texture_s(mlx, *str);
+	else if (**str == 'W' && *((*str) + 1) == 'E' && *((*str) + 2) == ' ')
+		get_texture_w(mlx, *str);
+	else if (**str == 'E' && *((*str) + 1) == 'A' && *((*str) + 2) == ' ')
+		get_texture_e(mlx, *str);
+	else if (**str == 'S' && *((*str) + 1) == ' ')
+		get_texture_sprite(mlx, *str);
+	else if (**str == 'F' && *((*str) + 1) == ' ')
+		ft_get_floor_color(mlx, *str);
+	else if (**str == 'C' && *((*str) + 1) == ' ')
+		ft_get_roof_color(mlx, *str);
+	else if (**str)
+		ft_get_map_grid(mlx, str, map_fd);
+	if (*str)
+		free(*str);
 }
 
 void		ft_parse_from_file(t_mlx *mlx, int map_fd)
@@ -98,6 +101,11 @@ void		ft_parse_from_file(t_mlx *mlx, int map_fd)
 	char	*str;
 
 	while (get_next_line(map_fd, &str) > 0)
-		ft_parse_line_from_file(mlx, str);
-	ft_parse_line_from_file(mlx, str);
+		ft_parse_line_from_file(mlx, &str, map_fd);
+	ft_parse_line_from_file(mlx, &str, map_fd);
+//	mlx->player = (t_player) {
+//		.dir = mlx->map.player_start.dir,
+//		.x = mlx->map.player_start.x,
+//		.y = mlx->map.player_start.y
+//	};
 }
