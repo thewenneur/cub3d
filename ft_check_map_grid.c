@@ -6,126 +6,74 @@
 /*   By: tbrouill <tbrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 05:11:45 by tbrouill          #+#    #+#             */
-/*   Updated: 2020/01/27 05:49:16 by tbrouill         ###   ########.fr       */
+/*   Updated: 2020/01/28 04:47:36 by tbrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_malloc_string_tab(t_mlx *mlx, int *j)
+
+void	ft_check_map_grid_player_start(t_app *app, unsigned int x,
+									   unsigned int y)
 {
-	if (!(mlx->map.map_grid = malloc(sizeof(char *) * (++(*j)))))
+	if (app->map.map_grid[y][x] == 'N')
 	{
-		mlx->error = ft_strdup("Memory allocation error.");
-		mlx->map.init = 0;
-		ft_quit(mlx);
+		app->map.player_start.dir = 0.0;
+		app->map.player_start.x = x;
+		app->map.player_start.y = y;
+		app->map.map_grid[y][x] = '0';
+	}
+	else if (app->map.map_grid[y][x] == 'S')
+	{
+		app->map.player_start.dir = 180.0;
+		app->map.player_start.x = x;
+		app->map.player_start.y = y;
+		app->map.map_grid[y][x] = '0';
+	}
+	else if (app->map.map_grid[y][x] == 'E')
+	{
+		app->map.player_start.dir = 275.0;
+		app->map.player_start.x = x;
+		app->map.player_start.y = y;
+		app->map.map_grid[y][x] = '0';
+	}
+	else if (app->map.map_grid[y][x] == 'W')
+	{
+		app->map.player_start.dir = 90.0;
+		app->map.player_start.x = x;
+		app->map.player_start.y = y;
+		app->map.map_grid[y][x] = '0';
 	}
 }
 
-void ft_add_line_to_map_grid(t_mlx *mlx, char **str, int *j)
-{
-	char	**ptr;
-	int		i;
-
-	i = -1;
-	ptr = mlx->map.map_grid;
-	ft_malloc_string_tab(mlx, j);
-	while (++i < *j)
-		mlx->map.map_grid[i] = ptr[i];
-	mlx->map.map_grid[*j] = *str;
-	free(ptr);
-}
-
-void	ft_get_map_grid_from_file(t_mlx *mlx, char **str, const int map_fd)
-{
-	int		i;
-	int		j;
-	char	*ptr;
-
-	j = -1;
-	ft_malloc_string_tab(mlx, &j);
-	mlx->map.map_grid[j] = *str;
-	while (get_next_line(map_fd, str) > 0)
-	{
-		i = 0;
-		while ((*str)[i] && ((**str >= '0' && **str <= '2') || **str == 'N'
-		|| **str == 'S' || **str == 'W' || **str == 'E'))
-			i++;
-		if (!(*str)[i])
-			ft_add_line_to_map_grid(mlx, str, &j);
-		*str = NULL;
-	}
-	ptr = NULL;
-	ft_add_line_to_map_grid(mlx, &ptr, &j);
-}
-
-void	ft_check_map_grid_payer_start(t_mlx *mlx, unsigned int x,
-													unsigned int y)
-{
-	if (mlx->map.map_grid[y][x] == 'N')
-	{
-		mlx->map.player_start.dir = 0.0;
-		mlx->map.player_start.x = x;
-		mlx->map.player_start.y = y;
-		mlx->map.map_grid[y][x] = '0';
-	}
-	else if (mlx->map.map_grid[y][x] == 'S')
-	{
-		mlx->map.player_start.dir = 180.0;
-		mlx->map.player_start.x = x;
-		mlx->map.player_start.y = y;
-		mlx->map.map_grid[y][x] = '0';
-	}
-	else if (mlx->map.map_grid[y][x] == 'E')
-	{
-		mlx->map.player_start.dir = 275.0;
-		mlx->map.player_start.x = x;
-		mlx->map.player_start.y = y;
-		mlx->map.map_grid[y][x] = '0';
-	}
-	else if (mlx->map.map_grid[y][x] == 'W')
-	{
-		mlx->map.player_start.dir = 90.0;
-		mlx->map.player_start.x = x;
-		mlx->map.player_start.y = y;
-		mlx->map.map_grid[y][x] = '0';
-	}
-}
-
-void	ft_check_map_grid(t_mlx *mlx)
+void	ft_check_map_grid(t_app *app)
 {
 	unsigned int	x;
 	unsigned int	y;
 	unsigned int	x_max;
 	unsigned int	y_max;
+	unsigned int	len;
 
 	y = -1;
 	x_max = 0;
 	y_max = 0;
-	while (mlx->map.map_grid[y_max])
+	while (app->map.map_grid[y_max])
 		y_max++;
 	while (++y < y_max)
 	{
 		x = -1;
-		if (ft_strlen(mlx->map.map_grid[y]) > x_max)
-			x_max = ft_strlen(mlx->map.map_grid[y]);
-		while (++x < x_max)
-			ft_check_map_grid_payer_start(mlx, x, y);
+		if ((len = ft_strlen(app->map.map_grid[y])) > x_max)
+			x_max = len;
+		while (++x < len)
+			ft_check_map_grid_player_start(app, x, y);
+		if (!y)
+		{
+			while (--x)
+				if (app->map.map_grid[0][x] != '1')
+					ft_init_error(app, "Map not closed");
+		}
 	}
 
 }
 
-void	ft_get_map_grid(t_mlx *mlx, char **str, int map_fd)
-{
-	int		i;
 
-	i = 0;
-	while ((*str)[i] && ((**str >= '0' && **str <= '2') || **str == 'N'
-	|| **str == 'S' || **str == 'W' || **str == 'E'))
-		i++;
-	if (!(*str)[i])
-	{
-		ft_get_map_grid_from_file(mlx, str, map_fd);
-		ft_check_map_grid(mlx);
-	}
-}

@@ -12,11 +12,11 @@
 
 #include "cub3d.h"
 
-int	ft_keystroke(int keycode, t_mlx *mlx)
+int	ft_keystroke(int keycode, t_app *app)
 {
-	(void)mlx;
+	(void)app;
 	printf("Keycode\t:\t%d\n", keycode);
 	if (keycode == 53)
-		ft_quit(mlx);
+		ft_quit(app);
 	return (0);
 }
