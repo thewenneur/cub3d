@@ -66,12 +66,12 @@ void	ft_check_map_grid(t_app *app)
 			x_max = len;
 		while (++x < len)
 			ft_check_map_grid_player_start(app, x, y);
-		if (!y)
-		{
-			while (--x)
-				if (app->map.map_grid[0][x] != '1')
-					ft_init_error(app, "Map not closed");
-		}
+//		if (!y)
+//		{
+//			while (--x)
+//				if (app->map.map_grid[0][x] != '1')
+//					ft_init_error(app, "Map not closed");
+//		}
 	}
 
 }
